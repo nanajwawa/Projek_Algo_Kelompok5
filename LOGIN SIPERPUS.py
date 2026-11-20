@@ -12,7 +12,7 @@ def header(isi='', homepage=0):
     
     width = (67 - len(isi)) // 2
     print(" " * width + isi + " " * width)
-    print('=' * 66)
+    print('=' * 67)
     
     if homepage == 1:
         kalimat_welcome = "Selamat Datang di aplikasi SIPERPUS! :)"
