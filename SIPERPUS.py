@@ -408,13 +408,9 @@ def tambah_denda(df):
         print("ID Peminjaman sudah terdaftar di data denda!")
         return df
 
-    try:
-        jumlah_hari_terlambat = int(input("Masukkan Keterlambatan (hari) : "))
-        if jumlah_hari_terlambat <= 0:
-            print("Keterlambatan harus lebih dari 0 hari!")
-            return df
-    except ValueError:
-        print("Input harus berupa angka!")
+    hari_str = input("Masukkan Keterlambatan (hari) : ").strip()
+    if not validasi_angka_positif(hari_str):
+        print("Input harus berupa angka bulat lebih dari 0!")
         return df
 
     denda_per_hari = 500
@@ -458,13 +454,14 @@ def ubah_denda(df):
         pilihan = input("Pilih bagian yang ingin diubah (1/2): ").strip()
 
         if pilihan == "1":
-            try:
-                hari_baru = int(input("Masukkan jumlah keterlambatan baru (hari): "))
+            hari_baru_str = input("Masukkan jumlah keterlambatan baru (hari): ").strip()
+            if validasi_angka_positif(hari_baru_str):
+                hari_baru = int(hari_baru_str)
                 df.loc[index_baris, "KETERLAMBATAN_HARI"] = hari_baru
-                df.loc[index_baris, "TOTAL_DENDA"] = hari_baru * 500
+                df.loc[index_baris, "TOTAL_DENDA"] = hari_baru * denda_per_hari
                 print("Keterlambatan dan total denda berhasil diperbarui!")
-            except ValueError:
-                print("Input harus berupa angka!")
+            else:
+                print("Input harus berupa angka bulat lebih dari 0!")
         elif pilihan == "2":
             df.loc[index_baris, "STATUS_DENDA"] = "Lunas"
             print("Status denda berhasil diubah menjadi Lunas!")
@@ -475,7 +472,7 @@ def ubah_denda(df):
     else:
         print(f"Data dengan ID Peminjaman '{id_cari}' tidak ditemukan.")
 
-    return df
+    return
 
 
 def hapus_denda(df):
