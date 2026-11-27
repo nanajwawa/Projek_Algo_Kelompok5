@@ -1,26 +1,30 @@
-import os
-import csv
-from datetime import datetime, date
-import pandas as pd
+import os #Memanggil library OS untuk berinteraksi dengan sistem operasi, seperti membaca lokasi file, memeriksa keberadaan file, dan membersihkan layar.
+import csv #Memanggil library untuk membaca dan menulis file CSV.
+from datetime import datetime, date #datetime digunakan untuk mengubah teks menjadi tanggal, sedangkan date digunakan untuk mengambil tanggal hari ini.
+import pandas as pd #untuk mengolah data berbentuk tabel.
 
 # Menentukan lokasi folder tempat file .py berada agar pembacaan file selalu akurat
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-FILE_HEADER = os.path.join(BASE_DIR, "header.txt")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__)) 
+#_file_mendapatkan alamat lengkap lokasi file Python yang sedang dijalankan.
+#dirname Digunakan untuk mengambil alamat folder dari lokasi file Python tersebut
+#Menyimpan lokasi folder utama program ke dalam variabel BASE_DIR
+FILE_HEADER = os.path.join(BASE_DIR, "header.txt") #agar program dapat menemukan file header.txt di folder yang sama dengan program Python
 FILE_PENGGUNA = os.path.join(BASE_DIR, "DaftarPengguna.csv")
-FILE_BUKU = os.path.join(BASE_DIR, "buku.csv")
+FILE_PENGGUNA = os.path.join(BASE_DIR, "DaftarPengguna.csv")
+FILE_BUKU = os.path.join(BASE_DIR, "buku.csv") #os.path.join, agar penyusunan alamat file menyesuaikan sistem operasi dan program tidak perlu menuliskan alamat folder secara manual.
 FILE_PEMINJAMAN = os.path.join(BASE_DIR, "peminjaman.csv")
 FILE_DENDA = os.path.join(BASE_DIR, "data_denda_siperpus.csv")
 
 KOLOM_DENDA = ["ID_PEMINJAMAN", "KETERLAMBATAN_HARI", "TOTAL_DENDA", "STATUS_DENDA"]
-
+#Membuat daftar nama kolom yang akan digunakan pada tabel denda.
 
 # =====================================================================
 # 1. INISIALISASI SELURUH FILE PENDUKUNG
 # =====================================================================
 def siapkan_semua_file():
     # 1. Siapkan header.txt jika belum ada
-    if not os.path.exists(FILE_HEADER):
-        with open(FILE_HEADER, "w", encoding="utf-8") as file:
+    if not os.path.exists(FILE_HEADER): #memeriksa apakah file header sudah tersedia.
+        with open(FILE_HEADER, "w", encoding="utf-8") as file: #encoding, mengatur format karakter agar teks dapat dibaca dengan baik.
             file.write("=" * 67 + "\n")
             file.write("                 APLIKASI SIPERPUS (PERPUSTAKAAN)                  \n")
             file.write("=" * 67 + "\n")
