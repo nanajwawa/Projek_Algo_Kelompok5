@@ -24,7 +24,9 @@ KOLOM_DENDA = ["ID_PEMINJAMAN", "KETERLAMBATAN_HARI", "TOTAL_DENDA", "STATUS_DEN
 def siapkan_semua_file():
     # 1. Siapkan header.txt jika belum ada
     if not os.path.exists(FILE_HEADER): #memeriksa apakah file header sudah tersedia.
-        with open(FILE_HEADER, "w", encoding="utf-8") as file: #encoding, mengatur format karakter agar teks dapat dibaca dengan baik.
+        with open(FILE_HEADER, "w", encoding="utf-8") as file: 
+            #encoding, mengatur format karakter agar teks dapat dibaca dengan baik.
+            #as file memberikan nama file untuk objek file yang sedang dibuka.
             file.write("=" * 67 + "\n")
             file.write("                 APLIKASI SIPERPUS (PERPUSTAKAAN)                  \n")
             file.write("=" * 67 + "\n")
@@ -39,7 +41,7 @@ def siapkan_semua_file():
 
     # 3. Siapkan buku.csv jika belum ada
     if not os.path.exists(FILE_BUKU):
-        with open(FILE_BUKU, "w", newline="", encoding="utf-8") as file:
+        with open(FILE_BUKU, "w", newline="", encoding="utf-8") as file: #newline="" mencegah munculnya baris kosong tambahan ketika menulis CSV pada beberapa sistem.
             tulis = csv.writer(file)
             tulis.writerow(["id_buku", "judul", "stok"])
             # Contoh 2 buku awal agar bisa langsung dites
@@ -61,7 +63,7 @@ def siapkan_semua_file():
 
     # 5. Siapkan data_denda_siperpus.csv jika belum ada
     if not os.path.exists(FILE_DENDA):
-        df_denda = pd.DataFrame(columns=KOLOM_DENDA)
+        df_denda = pd.DataFrame(columns=KOLOM_DENDA) #columns=KOLOM_DENDA berarti nama kolom diambil dari daftar yang sebelumnya dibuat.
         df_denda.to_csv(FILE_DENDA, index=False)
 
 
@@ -70,6 +72,8 @@ def siapkan_semua_file():
 # =====================================================================
 def tampilkan_header(isi="", homepage=0):
     os.system("cls" if os.name == "nt" else "clear")
+    #os.name merupakan operator kondisi singkat (ternary).
+    #os.system() menjalankan perintah sistem operasi.
 
     with open(FILE_HEADER, "r", encoding="utf-8") as file:
         filetxt = file.read()
