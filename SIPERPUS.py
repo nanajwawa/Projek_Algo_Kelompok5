@@ -248,22 +248,21 @@ def pinjam_buku_siswa(nama_default=""):
     tanggal_pinjam = date.today()
     print("\nTanggal pinjam:", tanggal_pinjam)
 
-    tanggal_kembali_str = input("Masukkan tanggal pengembalian (YYYY-MM-DD): ").strip()
+    while True:
+        tanggal_kembali_str = input("Masukkan batas tanggal pengembalian (YYYY-MM-DD): ").strip()
+        if not validasi_tanggal_valid(tanggal_kembali_str):
+            print("Format tanggal tidak valid atau tanggal tidak ada di kalender! Gunakan YYYY-MM-DD.")
+            continue
 
-    try:
-        tanggal_kembali = datetime.strptime(tanggal_kembali_str, "%Y-%m-%d").date()
-    except ValueError:
-        print("Format tanggal tidak valid! Gunakan format YYYY-MM-DD.")
-        return
-
-    durasi = (tanggal_kembali - tanggal_pinjam).days
-    if durasi <= 0:
-        print("Tanggal pengembalian harus setelah tanggal pinjam!")
-        return
-
-    if durasi > 7:
-        print("Maksimal peminjaman adalah 7 hari!")
-        return
+        tanggal_kembali = ubah_ke_date(tanggal_kembali_str)
+        durasi = (tanggal_kembali - tanggal_pinjam).days
+        if durasi <= 0:
+            print("Tanggal pengembalian harus setelah tanggal pinjam!")
+            continue
+        if durasi > 7:
+            print("Maksimal peminjaman adalah 7 hari!")
+            continue
+        break
 
     # Membuat ID peminjaman otomatis
     with open(FILE_PEMINJAMAN, "r", newline="", encoding="utf-8-sig") as file:
